@@ -1,0 +1,2 @@
+3 conv2d no batch normalization 79% eval
+3 conv2d batch normalization 82% eval
