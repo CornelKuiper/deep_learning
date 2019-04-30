@@ -2,14 +2,14 @@ import tensorflow as tf
 from model import model
 from dataset import get_dataset
 
-DIR = 'cifar10'
-lr = 0.005
-decay = 0.95
+DIR = 'fashion_mnist'
+lr = 0.0005
+decay = 0.8
 optimizer = 'adam'
 name = 'opt{}_lr{}_dc{}'.format(optimizer, lr, decay)
 
 
-train_dataset, test_dataset = get_dataset(batch_size=32, dataset_name='cifar10')
+train_dataset, test_dataset = get_dataset(batch_size=32, dataset_name='fashion_mnist')
 
 model_ = model('model')
 
@@ -43,9 +43,16 @@ model_.compile(optimizer=tf.keras.optimizers.Adam(lr),
                metrics=['accuracy'])
 
 callbacks = [
-    tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name)),
-    LearningRateScheduler(decay_rate=decay, decay_steps=2000)
+    tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name),update_freq='epoch',write_graph=False),
+    LearningRateScheduler(decay_rate=decay, decay_steps=1000)
 ]
 
-model_.fit(train_dataset, epochs=100, steps_per_epoch=1000, verbose=1,
+
+# callbacks = [
+#     tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name),update_freq='epoch',write_graph=False)
+# ]
+
+model_.fit(train_dataset, epochs=25, steps_per_epoch=1000, verbose=1,
            validation_data=test_dataset, validation_steps=500, callbacks=callbacks)
+# model_.fit(train_dataset, epochs=25, steps_per_epoch=1000, verbose=1,
+#            validation_data=test_dataset, validation_steps=500)

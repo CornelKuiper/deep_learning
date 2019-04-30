@@ -6,7 +6,7 @@ TRAINING = True
 def model(name):
     depth = [64, 128, 256]
     x = inputs = tf.keras.layers.Input([32, 32, 3])
-    tf.summary.image('x', x, 5)
+    # tf.summary.image('x', x, 5)
     for idx, filters in enumerate(depth):
         x = tf.keras.layers.Conv2D(filters=filters, kernel_size=3,
                                    strides=1, padding='SAME')(x)
