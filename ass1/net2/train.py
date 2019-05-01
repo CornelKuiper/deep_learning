@@ -1,12 +1,12 @@
 import tensorflow as tf
-from model import model
+from all_conv_model import model
 from dataset import get_dataset
 
 DIR = 'cifar10'
-lr = 0.005
-decay = 0.95
+lr = 0.0005
+decay = 0.9
 optimizer = 'adam'
-name = 'opt{}_lr{}_dc{}'.format(optimizer, lr, decay)
+name = 'opt{}_lr{}_dc{}_allconv'.format(optimizer, lr, decay)
 
 
 train_dataset, test_dataset = get_dataset(batch_size=32, dataset_name='cifar10')
@@ -44,7 +44,7 @@ model_.compile(optimizer=tf.keras.optimizers.Adam(lr),
 
 callbacks = [
     tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name)),
-    LearningRateScheduler(decay_rate=decay, decay_steps=2000)
+    LearningRateScheduler(decay_rate=decay, decay_steps=1000)
 ]
 
 model_.fit(train_dataset, epochs=100, steps_per_epoch=1000, verbose=1,
