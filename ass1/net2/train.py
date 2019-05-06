@@ -2,11 +2,11 @@ import tensorflow as tf
 from all_conv_model import model
 from dataset import get_dataset
 
-DIR = 'cifar10'
+DIR = 'cifar10_alt'
 lr = 0.0005
-decay = 0.9
-optimizer = 'adam'
-name = 'opt{}_lr{}_dc{}_allconv'.format(optimizer, lr, decay)
+decay = 0.95
+optimizer = 'rmsprop'
+name = 'opt{}_lr{}_dc{}_allconv2'.format(optimizer, lr, decay)
 
 
 train_dataset, test_dataset = get_dataset(batch_size=32, dataset_name='cifar10')
@@ -38,14 +38,14 @@ class LearningRateScheduler(tf.keras.callbacks.Callback):
         self.file_writer.flush()
 
 
-model_.compile(optimizer=tf.keras.optimizers.Adam(lr),
+model_.compile(optimizer=tf.keras.optimizers.RMSprop(lr),
                loss='sparse_categorical_crossentropy',
                metrics=['accuracy'])
 
 callbacks = [
-    tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name)),
+    tf.keras.callbacks.TensorBoard(log_dir='./logs/{}/{}'.format(DIR, name), write_graph=False),
     LearningRateScheduler(decay_rate=decay, decay_steps=1000)
 ]
 
-model_.fit(train_dataset, epochs=100, steps_per_epoch=1000, verbose=1,
+model_.fit(train_dataset, epochs=50, steps_per_epoch=1000, verbose=1,
            validation_data=test_dataset, validation_steps=500, callbacks=callbacks)

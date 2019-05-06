@@ -25,12 +25,14 @@ def model(name):
     x = tf.keras.layers.Conv2D(filters=256, kernel_size=3,
                                strides=1, padding='SAME')(x)
     x = tf.keras.layers.BatchNormalization()(x)
+    x = tf.keras.layers.LeakyReLU()(x)
     x = tf.keras.layers.Conv2D(filters=256, kernel_size=1,
                                strides=1, padding='SAME')(x)
     x = tf.keras.layers.BatchNormalization()(x)
+    x = tf.keras.layers.LeakyReLU()(x)
     x = tf.keras.layers.Conv2D(filters=10, kernel_size=1,
                                strides=1, padding='SAME')(x)
-    x = tf.keras.layers.BatchNormalization()(x)
+    # x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.GlobalAveragePooling2D()(x)
     x = tf.keras.layers.Softmax()(x)
     return tf.keras.Model(inputs, x, name=name)
