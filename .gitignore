@@ -1,3 +1,6 @@
 ass1/logs
 ass1/net2/logs
+ass1/results
+ass1/network.py
+ass1/load_cifar.py
 *.pyc
